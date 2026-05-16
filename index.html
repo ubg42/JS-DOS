@@ -21,7 +21,6 @@ html, body {
     height: 100vh;
 }
 
-/* Archive.org-style overlay */
 #overlay {
     position: absolute;
     inset: 0;
@@ -51,33 +50,42 @@ button {
 <div id="dos"></div>
 
 <div id="overlay">
-    <h1>The Oregon Trail (1990)</h1>
-    <button onclick="startGame()">Start Game</button>
+    <h1>Loading Emulator...</h1>
+    <p id="status">Please wait...</p>
+    <button id="startBtn" disabled>Start Game</button>
 </div>
 
 <script>
-let ci;
+let ci = null;
+let ready = false;
 
-// Boot DOS (but don't run game yet)
+const startBtn = document.getElementById("startBtn");
+const statusText = document.getElementById("status");
+
+// Load JS-DOS FIRST
 Dos(document.getElementById("dos"), {
     url: "https://archive.org/download/oregon-the-1990/Oregon_The_1990.zip",
-    autoStart: false
+    autoStart: true
 }).then((instance) => {
+
     ci = instance;
+    ready = true;
+
+    statusText.innerText = "Ready!";
+    startBtn.disabled = false;
 });
 
-function startGame() {
+// Button ONLY runs after ready
+startBtn.onclick = () => {
+    if (!ready || !ci) return;
+
     document.getElementById("overlay").style.display = "none";
 
     setTimeout(() => {
         ci.fullscreen?.();
-
-        // THIS is the clean Archive-style way:
-        // directly run the executable (no typing simulation)
         ci.run("OREGON.EXE");
-
-    }, 1500);
-}
+    }, 500);
+};
 </script>
 
 </body>
