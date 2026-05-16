@@ -2,33 +2,42 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Oregon Trail</title>
+    <title>Oregon Trail 1990 - JS-DOS</title>
+
+    <script src="js-dos.js"></script>
 
     <style>
         html, body {
+            margin: 0;
+            width: 100%;
             height: 100%;
+            background: black;
+            overflow: hidden;
         }
 
         #dos {
-            width: 100%;
-            height: 100%;
+            width: 100vw;
+            height: 100vh;
         }
     </style>
-
-    <!-- js-dos style sheet -->
-    <link rel="stylesheet" href="https://v8.js-dos.com/latest/js-dos.css">
-
-    <!-- js-dos -->
-    <script src="https://v8.js-dos.com/latest/js-dos.js"></script>
 </head>
 <body>
 
-    <div id="dos" style="width: 100%; height: 100%"></div>
+<div id="dos"></div>
 
-    <script>
-        Dos(document.getElementById("dos"), {
-            url: "Oregon_The_1990.zip",
-        });
-    </script>
+<script>
+Dos(document.getElementById("dos"), {
+    url: "Oregon_The_1990.zip",
+}).then((ci) => {
+
+    // wait for DOS boot
+    setTimeout(() => {
+        ci.fullscreen?.();
+        ci.run("OREGON.EXE"); // main game file
+    }, 3000);
+
+});
+</script>
+
 </body>
 </html>
