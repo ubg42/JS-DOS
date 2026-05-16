@@ -17,21 +17,10 @@
             width: 100vw;
             height: 100vh;
         }
-
-        #startBtn {
-            position: absolute;
-            top: 20px;
-            left: 20px;
-            z-index: 10;
-            padding: 10px 15px;
-            font-size: 16px;
-            cursor: pointer;
-        }
     </style>
 </head>
 <body>
 
-<button id="startBtn">Start Game</button>
 <div id="dosbox"></div>
 
 <!-- DOSBox build -->
@@ -40,18 +29,14 @@
 <script>
 let dosbox;
 
-document.getElementById("startBtn").onclick = async () => {
-    document.getElementById("startBtn").style.display = "none";
-
+window.onload = () => {
     dosbox = new Dosbox({
         id: "dosbox",
         onload: function (dosbox) {
-
             dosbox.run(
                 "Oregon_The_1990.zip",
                 "OREGON.EXE"
             );
-
         },
         onrun: function (dosbox, app) {
             console.log("Running:", app);
