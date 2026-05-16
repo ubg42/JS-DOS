@@ -1,52 +1,45 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<title>Oregon Trail 1990</title>
+    <meta charset="UTF-8">
+    <title>Oregon Trail 1990 - DOSBox</title>
 
-<style>
-    html, body {
-        margin: 0;
-        width: 100%;
-        height: 100%;
-        background: black;
-        overflow: hidden;
-    }
+    <style>
+        html, body {
+            margin: 0;
+            width: 100%;
+            height: 100%;
+            background: black;
+            overflow: hidden;
+        }
 
-    /* Make container full screen */
-    #dosbox {
-        width: 100vw;
-        height: 100vh;
-    }
-
-    /* FORCE canvas to fill screen */
-    #dosbox canvas {
-        width: 100% !important;
-        height: 100% !important;
-        image-rendering: pixelated;
-    }
-</style>
+        #dosbox {
+            width: 100vw;
+            height: 100vh;
+        }
+    </style>
 </head>
 <body>
 
 <div id="dosbox"></div>
 
+<!-- DOSBox build -->
 <script src="js-dos-api.js"></script>
 
 <script>
+let dosbox;
+
 window.onload = () => {
-    new Dosbox({
+    dosbox = new Dosbox({
         id: "dosbox",
         onload: function (dosbox) {
-            dosbox.run("Oregon_The_1990.zip", "OREGON.EXE");
-
-            // optional: try fullscreen mode (if supported)
-            setTimeout(() => {
-                const el = document.getElementById("dosbox");
-                if (el.requestFullscreen) {
-                    el.requestFullscreen().catch(()=>{});
-                }
-            }, 1000);
+            dosbox.run(
+                "Oregon_The_1990.zip",
+                "OREGON.EXE"
+            );
+        },
+        onrun: function (dosbox, app) {
+            console.log("Running:", app);
         }
     });
 };
