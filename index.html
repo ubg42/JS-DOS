@@ -19,24 +19,56 @@
             width: 100vw;
             height: 100vh;
         }
+
+        #overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: rgba(0,0,0,0.6);
+            z-index: 10;
+        }
+
+        button {
+            font-size: 24px;
+            padding: 15px 30px;
+            cursor: pointer;
+        }
     </style>
 </head>
 <body>
 
 <div id="dos"></div>
 
+<div id="overlay">
+    <button onclick="startGame()">Start Game</button>
+</div>
+
 <script>
+let ci;
+
 Dos(document.getElementById("dos"), {
     url: "Oregon_The_1990.zip",
-}).then((ci) => {
+}).then((instance) => {
+    ci = instance;
+});
 
-    // wait for DOS boot
+function startGame() {
+    document.getElementById("overlay").style.display = "none";
+
     setTimeout(() => {
         ci.fullscreen?.();
-        ci.run("OREGON.EXE"); // main game file
-    }, 3000);
 
-});
+        // "Type" OREGON.EXE and run it
+        const command = "OREGON.EXE\r";
+        ci.commandInterface.sendKeys(command);
+
+    }, 2000);
+}
 </script>
 
 </body>
