@@ -2,9 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Oregon Trail 1990 - JS-DOS</title>
-
-    <script src="js-dos.js"></script>
+    <title>Oregon Trail 1990 - DOSBox</title>
 
     <style>
         html, body {
@@ -15,28 +13,51 @@
             overflow: hidden;
         }
 
-        #dos {
+        #dosbox {
             width: 100vw;
             height: 100vh;
+        }
+
+        #startBtn {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            z-index: 10;
+            padding: 10px 15px;
+            font-size: 16px;
+            cursor: pointer;
         }
     </style>
 </head>
 <body>
 
-<div id="dos"></div>
+<button id="startBtn">Start Game</button>
+<div id="dosbox"></div>
+
+<!-- DOSBox build -->
+<script src="js-dos-api.js"></script>
 
 <script>
-Dos(document.getElementById("dos"), {
-    url: "Oregon_The_1990.zip",
-}).then((ci) => {
+let dosbox;
 
-    // wait for DOS boot
-    setTimeout(() => {
-        ci.fullscreen?.();
-        ci.run("OREGON.EXE"); // main game file
-    }, 3000);
+document.getElementById("startBtn").onclick = async () => {
+    document.getElementById("startBtn").style.display = "none";
 
-});
+    dosbox = new Dosbox({
+        id: "dosbox",
+        onload: function (dosbox) {
+
+            dosbox.run(
+                "Oregon_The_1990.zip",
+                "OREGON.EXE"
+            );
+
+        },
+        onrun: function (dosbox, app) {
+            console.log("Running:", app);
+        }
+    });
+};
 </script>
 
 </body>
