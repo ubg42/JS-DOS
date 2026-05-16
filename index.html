@@ -37,16 +37,11 @@
 window.onload = () => {
     new Dosbox({
         id: "dosbox",
+window.onload = () => {
+    new Dosbox({
+        id: "dosbox",
         onload: function (dosbox) {
             dosbox.run("Oregon_The_1990.zip", "OREGON.EXE");
-
-            // optional: try fullscreen mode (if supported)
-            setTimeout(() => {
-                const el = document.getElementById("dosbox");
-                if (el.requestFullscreen) {
-                    el.requestFullscreen().catch(()=>{});
-                }
-            }, 1000);
         }
     });
 };
